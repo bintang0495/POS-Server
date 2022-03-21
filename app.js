@@ -28,7 +28,11 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+  '/v1/imgProduct',
+  express.static(path.join(__dirname, 'public/images/products'))
+);
+// app.use('/public', express.static(path.join(__dirname, 'uploads')));
 app.use(decodeToken());
 
 app.use('/v1/auth', authRoute);

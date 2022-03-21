@@ -8,7 +8,6 @@ const Tag = require('../tag/model');
 const store = async (req, res, next) => {
   try {
     let payload = req.body;
-
     //relasi category
     if (payload.category) {
       let category = await Category.findOne({
@@ -84,8 +83,6 @@ const store = async (req, res, next) => {
         fields: err.errors,
       });
     }
-
-    console.log(err);
     next(err);
   }
 };
@@ -114,7 +111,6 @@ const update = async (req, res, next) => {
       });
       if (tags.length) {
         payload = { ...payload, tags: tags.map((tag) => tag._id) };
-        console.log(payload);
       } else {
         delete payload.tags;
       }
@@ -186,7 +182,6 @@ const update = async (req, res, next) => {
         fields: err.errors,
       });
     }
-    console.log(err);
     next(err);
   }
 };

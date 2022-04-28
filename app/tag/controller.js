@@ -1,5 +1,7 @@
 const Tags = require('./model');
 const User = require('../user/model');
+const Category = require('../category/model');
+const Product = require('../product/model');
 
 const store = async (req, res, next) => {
   try {
@@ -77,9 +79,43 @@ const index = async (req, res, next) => {
   }
 };
 
+const showTagByCategory = async (req, res, next) => {
+  try {
+    const { category } = req.params;
+    console.log(category);
+    const category_id = await Category.findOne({
+      name: { $regex: category, $options: 'i' },
+    });
+
+    const products = await Product.find({ category: category_id });
+    let tagIds = [];
+    products.forEach((product) => {
+      product.tags.forEach((tag) => {
+        if (!tagIds.includes(tag)) {
+          tagIds.push(tag);
+        }
+      });
+    });
+
+    const tags = await Tags.find({ _id: { $in: tagIds } });
+    res.json(tags);
+  } catch (err) {
+    if (err && err.name === 'ValidationError') {
+      return res.json({
+        error: 1,
+        message: err.message,
+        fields: err.errors,
+      });
+    }
+
+    next(err);
+  }
+};
+
 module.exports = {
   store,
   update,
   destroy,
   index,
+  showTagByCategory,
 };

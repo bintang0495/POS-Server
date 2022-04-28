@@ -29,7 +29,7 @@ const update = async (req, res, next) => {
               user: req.user._id,
               product: item.product,
             },
-            update: true,
+            update: item,
             upsert: true,
           },
         };

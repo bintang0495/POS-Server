@@ -14,5 +14,6 @@ router.delete(
   tagController.destroy
 );
 router.get('/tags', tagController.index);
+router.get('/tags/:category', tagController.showTagByCategory);
 
 module.exports = router;

@@ -17,7 +17,7 @@ const store = async (req, res, next) => {
     let address = await DeliveryAddress.findById(delivery_address);
     let order = new Order({
       _id: Types.ObjectId(),
-      status: 'waiting payment',
+      status: 'waiting_payment',
       delivery_fee,
       delivery_address: {
         provinsi: address.provinsi,
@@ -56,13 +56,13 @@ const store = async (req, res, next) => {
 
 const index = async (req, res, next) => {
   try {
-    let { skip = 0, limit = 10 } = req.query;
+    let { skip = 0, limit = 5 } = req.query;
     let count = await Order.find({ user: req.user._id }).countDocuments();
     let orders = await Order.find({ user: req.user._id })
       .skip(parseInt(skip))
       .limit(parseInt(limit))
       .populate('order_items')
-      .sort('-createdAt');
+      .sort('createdAt');
     return res.json({
       data: orders.map((order) => order.toJSON({ vrituals: true })),
       count,

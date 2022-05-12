@@ -29,11 +29,11 @@ const invoiceSchema = Schema(
 
     user: {
       type: Schema.Types.ObjectId,
-      req: 'User',
+      ref: 'User',
     },
     order: {
       type: Schema.Types.ObjectId,
-      req: 'Order',
+      ref: 'Order',
     },
   },
   { timestamps: true }

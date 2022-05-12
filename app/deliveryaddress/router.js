@@ -13,7 +13,7 @@ router.put('/delivery-addresses/:id', deliveryController.update);
 router.get('/delivery-addresses', deliveryController.index);
 
 router.delete(
-  '/delivery-addresses',
+  '/delivery-addresses/:id',
   policyValidation('delete', 'DeliveryAddress'),
   deliveryController.destroy
 );
